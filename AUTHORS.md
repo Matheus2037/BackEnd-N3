@@ -1,5 +1,3 @@
 João Carlos Rodrigues Martins
-
-Lucas Silva
-
+Lucas da Rosa da Silva
 Matheus da Silva Gastaldi
