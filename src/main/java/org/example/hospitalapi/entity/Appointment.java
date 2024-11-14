@@ -30,6 +30,14 @@ public class Appointment {
     @Column(nullable = false)
     private StatusEnum status;
 
+    public Appointment(long id, Patient patient, Doctor doctor, LocalDateTime appointmentDate, StatusEnum status) {
+        this.id = id;
+        this.patient = patient;
+        this.doctor = doctor;
+        this.appointmentDate = appointmentDate;
+        this.status = status;
+    }
+
     public long getId() {
         return id;
     }

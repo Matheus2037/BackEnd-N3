@@ -30,6 +30,16 @@ public class Doctor {
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
     private List<Appointment> appointments;
 
+    public Doctor(long id, String firstName, String lastName, String registration, String email, GenderEnum gender, List<Appointment> appointments) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.registration = registration;
+        this.email = email;
+        this.gender = gender;
+        this.appointments = appointments;
+    }
+
     public long getId() {
         return id;
     }
