@@ -1,6 +1,5 @@
-package org.example.hospitalapi.mappers;
+package org.example.hospitalapi.mapper;
 
-import org.example.hospitalapi.dtos.CreateAppointmentDto;
 import org.springframework.stereotype.Component;
 
 import org.example.hospitalapi.dtos.PatientDto;

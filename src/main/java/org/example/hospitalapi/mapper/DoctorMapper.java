@@ -1,4 +1,4 @@
-package org.example.hospitalapi.mappers;
+package org.example.hospitalapi.mapper;
 
 import org.example.hospitalapi.dtos.DoctorDto;
 import org.example.hospitalapi.dtos.CreateDoctorDto;
