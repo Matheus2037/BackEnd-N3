@@ -42,7 +42,7 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public DoctorDto updateDoctor(Long id, UpdateDoctorDto dto) {
+    public DoctorDto partialUpdateDoctor(Long id, UpdateDoctorDto dto) {
         Doctor doctor = doctorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Doctor not found with id: " + id));
 
@@ -52,7 +52,6 @@ public class DoctorServiceImpl implements DoctorService {
         if (dto.gender() != null) doctor.setGender(dto.gender());
 
         doctor = doctorRepository.save(doctor);
-
         return doctorMapper.toDto(doctor);
     }
 

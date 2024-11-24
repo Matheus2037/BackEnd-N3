@@ -2,13 +2,11 @@ package org.example.hospitalapi.controller;
 
 import jakarta.validation.Valid;
 import org.example.hospitalapi.dtos.*;
-import org.example.hospitalapi.entity.Appointment;
 import org.example.hospitalapi.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -41,10 +39,12 @@ public class AppointmentController {
         return appointmentService.createAppointment(createAppointmentDto);
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public AppointmentDto updateAppointment(@PathVariable Long id, @RequestBody @Valid UpdateAppointmentDto updateAppointmentDto) {
-        return appointmentService.updateAppointment(id, updateAppointmentDto);
+    public AppointmentDto partialUpdateAppointment(
+            @PathVariable Long id,
+            @RequestBody @Valid UpdateAppointmentDto updateAppointmentDto) {
+        return appointmentService.partialUpdateAppointment(id, updateAppointmentDto);
     }
 
     @DeleteMapping("/{id}")

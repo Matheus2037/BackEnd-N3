@@ -42,7 +42,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public PatientDto updatePatient(Long id, UpdatePatientDto dto) {
+    public PatientDto partialUpdatePatient(Long id, UpdatePatientDto dto) {
         Patient patient = patientRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Patient not found with id: " + id));
 

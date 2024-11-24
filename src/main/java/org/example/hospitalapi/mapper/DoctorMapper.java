@@ -24,13 +24,13 @@ public class DoctorMapper {
 
     public Doctor toModel(CreateDoctorDto createDoctorDto) {
         return new Doctor(
-                0, // ID é gerado automaticamente, por isso pode ser inicializado como 0 ou omitido dependendo do construtor
+                0,
                 createDoctorDto.firstName(),
                 createDoctorDto.lastName(),
                 createDoctorDto.registration(),
                 createDoctorDto.email(),
                 createDoctorDto.gender(),
-                new ArrayList<>() // Lista de appointments inicializada vazia
+                new ArrayList<>()
         );
     }
 }

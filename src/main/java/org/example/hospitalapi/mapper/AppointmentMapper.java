@@ -2,13 +2,9 @@ package org.example.hospitalapi.mapper;
 
 import org.example.hospitalapi.dtos.AppointmentDto;
 import org.example.hospitalapi.dtos.CreateAppointmentDto;
-import org.example.hospitalapi.dtos.CreateDoctorDto;
-import org.example.hospitalapi.entity.Doctor;
 import org.springframework.stereotype.Component;
 
 import org.example.hospitalapi.entity.Appointment;
-
-import java.util.ArrayList;
 
 @Component
 public class AppointmentMapper {

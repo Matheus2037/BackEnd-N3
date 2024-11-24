@@ -62,7 +62,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public AppointmentDto updateAppointment(Long id, UpdateAppointmentDto updateAppointmentDto) {
+    public AppointmentDto partialUpdateAppointment(Long id, UpdateAppointmentDto updateAppointmentDto) {
         Appointment appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Appointment not found with id: " + id));
 

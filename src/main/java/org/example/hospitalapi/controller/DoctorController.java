@@ -39,10 +39,10 @@ public class DoctorController {
         return doctorService.createDoctor(createDoctorDto);
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public DoctorDto updateDoctor(@PathVariable Long id, @RequestBody @Valid UpdateDoctorDto updateDoctorDto) {
-        return doctorService.updateDoctor(id, updateDoctorDto);
+    public DoctorDto partialUpdateDoctor(@PathVariable Long id, @RequestBody @Valid UpdateDoctorDto updateDoctorDto) {
+        return doctorService.partialUpdateDoctor(id, updateDoctorDto);
     }
 
     @DeleteMapping("/{id}")
