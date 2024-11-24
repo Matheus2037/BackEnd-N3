@@ -1,19 +1,20 @@
 package org.example.hospitalapi.service;
 
-import org.example.hospitalapi.entity.Patient;
+import org.example.hospitalapi.dtos.CreatePatientDto;
+import org.example.hospitalapi.dtos.PatientDto;
+import org.example.hospitalapi.dtos.UpdatePatientDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface PatientService {
 
-    Page<Patient> getPatients(Pageable pageable);
+    Page<PatientDto> getPatients(Pageable pageable);
 
-    Patient createPatient(Patient patient);
+    PatientDto createPatient(CreatePatientDto createPatientDto);
 
-    Patient getPatientById(Long id);
+    PatientDto getPatientById(Long id);
 
-    Patient updatePatient(Long id, Patient patientDetails);
+    PatientDto updatePatient(Long id, UpdatePatientDto updatePatientDto);
 
     void deletePatient(Long id);
-
 }

@@ -27,7 +27,7 @@ public record CreatePatientDto(
         )
         String email,
         @NotNull(
-                message = "O campo gender deve ser uma das seguintes opções: (Male,Female,Other)"
+                message = "O campo gender é obrigatório. Use um dos valores permitidos: Male, Female ou Other"
         )
         GenderEnum gender
 ) {}

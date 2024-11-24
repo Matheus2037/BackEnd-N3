@@ -22,14 +22,13 @@ public class PatientMapper {
     }
 
     public Patient toModel(CreatePatientDto createPatientDto) {
-        return new Patient(
-                0, // ID é gerado automaticamente, por isso pode ser inicializado como 0 ou omitido dependendo do construtor
-                createPatientDto.firstName(),
-                createPatientDto.lastName(),
-                createPatientDto.email(),
-                createPatientDto.gender(),
-                new ArrayList<>() // Lista de appointments inicializada vazia
-        );
+        Patient patient = new Patient();
+        patient.setFirstName(createPatientDto.firstName());
+        patient.setLastName(createPatientDto.lastName());
+        patient.setEmail(createPatientDto.email());
+        patient.setGender(createPatientDto.gender());
+        patient.setAppointments(new ArrayList<>());
+        return patient;
     }
 
 }

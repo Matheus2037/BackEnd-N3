@@ -1,11 +1,12 @@
 package org.example.hospitalapi.controller;
 
-import org.example.hospitalapi.entity.Doctor;
+import jakarta.validation.Valid;
+import org.example.hospitalapi.dtos.*;
 import org.example.hospitalapi.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,33 +16,38 @@ public class DoctorController {
     @Autowired
     private DoctorService doctorService;
 
-    @GetMapping()
-    public ResponseEntity<Page<Doctor>> getDoctors(Pageable pageable) {
-        Page<Doctor> doctors = doctorService.getDoctors(pageable);
-        return ResponseEntity.ok(doctors);
+    @Autowired
+    public DoctorController(DoctorService doctorService) {
+        this.doctorService = doctorService;
     }
 
-    @PostMapping()
-    public ResponseEntity<Doctor> createDoctor(@RequestBody Doctor doctor) {
-        Doctor createdDoctor = doctorService.createDoctor(doctor);
-        return ResponseEntity.ok(createdDoctor);
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public Page<DoctorDto> getDoctors(Pageable pageable) {
+        return doctorService.getDoctors(pageable);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Doctor> getDoctorById(@PathVariable Long id) {
-        Doctor doctor = doctorService.getDoctorById(id);
-        return ResponseEntity.ok(doctor);
+    @ResponseStatus(HttpStatus.OK)
+    public DoctorDto getDoctorById(@PathVariable Long id) {
+        return doctorService.getDoctorById(id);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public DoctorDto createDoctor(@RequestBody @Valid CreateDoctorDto createDoctorDto) {
+        return doctorService.createDoctor(createDoctorDto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Doctor> updateDoctor(@PathVariable Long id, @RequestBody Doctor doctorDetails) {
-        Doctor updatedDoctor = doctorService.updateDoctor(id, doctorDetails);
-        return ResponseEntity.ok(updatedDoctor);
+    @ResponseStatus(HttpStatus.OK)
+    public DoctorDto updateDoctor(@PathVariable Long id, @RequestBody @Valid UpdateDoctorDto updateDoctorDto) {
+        return doctorService.updateDoctor(id, updateDoctorDto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteDoctor(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteDoctor(@PathVariable Long id) {
         doctorService.deleteDoctor(id);
-        return ResponseEntity.noContent().build();
     }
 }
