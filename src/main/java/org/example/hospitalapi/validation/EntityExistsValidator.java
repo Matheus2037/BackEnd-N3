@@ -22,7 +22,7 @@ public class EntityExistsValidator implements ConstraintValidator<EntityExists, 
     @Override
     public boolean isValid(Object value, ConstraintValidatorContext context) {
         if (value == null) {
-            return true; // Deixe que @NotNull cuide disso, se necessário
+            return true;
         }
 
         String query = String.format("SELECT COUNT(e) > 0 FROM %s e WHERE e.%s = :value",

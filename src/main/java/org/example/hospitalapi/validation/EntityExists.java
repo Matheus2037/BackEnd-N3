@@ -9,14 +9,14 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EntityExists {
-    String message() default "A entidade não existe"; // Mensagem padrão
+    String message() default "A entidade não existe";
 
-    Class<?>[] groups() default {}; // Grupos de validação (opcional)
+    Class<?>[] groups() default {};
 
-    Class<? extends Payload>[] payload() default {}; // Payloads adicionais (opcional)
+    Class<? extends Payload>[] payload() default {};
 
-    Class<?> entity(); // Tipo da entidade a ser verificada
+    Class<?> entity();
 
-    String fieldName() default "id"; // Nome do campo usado na verificação (padrão: "id")
+    String fieldName() default "id";
 
 }

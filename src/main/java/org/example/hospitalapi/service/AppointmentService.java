@@ -1,18 +1,20 @@
 package org.example.hospitalapi.service;
 
-import org.example.hospitalapi.entity.Appointment;
+import org.example.hospitalapi.dtos.AppointmentDto;
+import org.example.hospitalapi.dtos.CreateAppointmentDto;
+import org.example.hospitalapi.dtos.UpdateAppointmentDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface AppointmentService {
 
-    Page<Appointment> getAppointments(Pageable pageable);
+    Page<AppointmentDto> getAppointments(Pageable pageable);
 
-    Appointment createAppointment(Appointment appointment);
+    AppointmentDto createAppointment(CreateAppointmentDto createAppointmentDto);
 
-    Appointment getAppointmentById(Long id);
+    AppointmentDto getAppointmentById(Long id);
 
-    Appointment updateAppointment(Long id, Appointment appointmentDetails);
+    AppointmentDto updateAppointment(Long id, UpdateAppointmentDto updateAppointmentDto);
 
     void deleteAppointment(Long id);
 }

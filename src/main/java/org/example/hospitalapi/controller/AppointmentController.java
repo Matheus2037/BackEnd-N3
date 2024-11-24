@@ -1,10 +1,13 @@
 package org.example.hospitalapi.controller;
 
+import jakarta.validation.Valid;
+import org.example.hospitalapi.dtos.*;
 import org.example.hospitalapi.entity.Appointment;
 import org.example.hospitalapi.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,33 +18,38 @@ public class AppointmentController {
     @Autowired
     private AppointmentService appointmentService;
 
-    @GetMapping()
-    public ResponseEntity<Page<Appointment>> getAppointments(Pageable pageable) {
-        Page<Appointment> appointments = appointmentService.getAppointments(pageable);
-        return ResponseEntity.ok(appointments);
+    @Autowired
+    public AppointmentController(AppointmentService appointmentService) {
+        this.appointmentService = appointmentService;
     }
 
-    @PostMapping()
-    public ResponseEntity<Appointment> createAppointment(@RequestBody Appointment appointment) {
-        Appointment createdAppointment = appointmentService.createAppointment(appointment);
-        return ResponseEntity.ok(createdAppointment);
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public Page<AppointmentDto> getAppointments(Pageable pageable) {
+        return appointmentService.getAppointments(pageable);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Appointment> getAppointmentById(@PathVariable Long id) {
-        Appointment appointment = appointmentService.getAppointmentById(id);
-        return ResponseEntity.ok(appointment);
+    @ResponseStatus(HttpStatus.OK)
+    public AppointmentDto getAppointmentById(@PathVariable Long id) {
+        return appointmentService.getAppointmentById(id);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public AppointmentDto createAppointment(@RequestBody @Valid CreateAppointmentDto createAppointmentDto) {
+        return appointmentService.createAppointment(createAppointmentDto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Appointment> updateAppointment(@PathVariable Long id, @RequestBody Appointment appointmentDetails) {
-        Appointment updatedAppointment = appointmentService.updateAppointment(id, appointmentDetails);
-        return ResponseEntity.ok(updatedAppointment);
+    @ResponseStatus(HttpStatus.OK)
+    public AppointmentDto updateAppointment(@PathVariable Long id, @RequestBody @Valid UpdateAppointmentDto updateAppointmentDto) {
+        return appointmentService.updateAppointment(id, updateAppointmentDto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAppointment(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAppointment(@PathVariable Long id) {
         appointmentService.deleteAppointment(id);
-        return ResponseEntity.noContent().build();
     }
 }
