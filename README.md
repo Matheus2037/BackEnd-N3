@@ -33,15 +33,21 @@ Para executar o projeto (sem Docker):
 
 ## Regras de Negócio
 
-* A idade do paciente deve ser superior a 0 e inferior a 120 anos.
-* Um médico não pode ser agendado para mais de 10 consultas no mesmo dia.
 * O código de CR do médico deve seguir o padrão nacional.
 * A data de consulta não pode ser anterior à data atual.
 * O status da consulta deve ser "Scheduled", "Completed" ou "Canceled".
 
+## Endpoints
+
+* #### 8 Endpoints para Doctor
+
+* #### 5 Endpoints para Patient
+
+* #### 9 Endpoints para Appointment
+
 ## Rotas
 
-### Médicos
+### Médico
 
 #### `GET /doctor`
 Lista todos os médicos disponíveis com paginação.
@@ -90,6 +96,68 @@ Resposta:
 
 #### `GET /doctor/{id}`
 Busca um médico pelo ID.
+
+Requisição:
+```
+GET /doctor/1
+```
+
+Resposta:
+```json
+{
+  "id": 1,
+  "firstName": "Pedro",
+  "lastName": "Cardoso",
+  "registration": "12345-SC",
+  "email": "pedro@gmail.com"
+}
+```
+
+#### `GET /doctor/first-name/{first-name}`
+Busca um médico pelo primeiro nome.
+
+Requisição:
+```
+GET /doctor/first-name/Pedro
+```
+
+Resposta:
+```json
+{
+  "id": 1,
+  "firstName": "Pedro",
+  "lastName": "Cardoso",
+  "registration": "12345-SC",
+  "email": "pedro@gmail.com"
+}
+```
+
+#### `GET /doctor/registration/{registration}`
+Busca um médico pelo código de CR.
+
+Requisição:
+```
+GET /doctor/registration/SC-12345
+```
+
+Resposta:
+```json
+{
+  "id": 1,
+  "firstName": "Pedro",
+  "lastName": "Cardoso",
+  "registration": "12345-SC",
+  "email": "pedro@gmail.com"
+}
+```
+
+#### `GET /doctor/email/{email}`
+Busca um médico pelo email.
+
+Requisição:
+```
+GET /doctor/email/pedro@gmail.com
+```
 
 Resposta:
 ```json
@@ -341,6 +409,11 @@ Resposta:
 #### `GET /appointment/{id}`
 Busca uma consulta pelo ID.
 
+Requisição:
+```
+GET /appointment/1
+```
+
 Resposta:
 ```json
 {
@@ -350,6 +423,90 @@ Resposta:
   "doctorId": 1,
   "doctorName": "Pedro Cardoso",
   "appointmentDate": "2024-12-24T22:30:00",
+  "status": "SCHEDULED"
+}
+```
+
+#### `GET /appointment/date/{date}`
+Busca uma consulta pela data.
+
+Requisição:
+```
+GET /appointment/date/2024-12-24
+```
+
+Resposta:
+```json
+{
+  "id": 1,
+  "patientId": 2,
+  "patientName": "Fernanda Martins",
+  "doctorId": 1,
+  "doctorName": "Pedro Cardoso",
+  "appointmentDate": "2024-12-24",
+  "status": "SCHEDULED"
+}
+```
+
+#### `GET /appointment/status/{status}`
+Busca uma consulta pelo status.
+
+Requisição:
+```
+GET /appointment/status/SCHEDULED
+```
+
+Resposta:
+```json
+{
+  "id": 1,
+  "patientId": 2,
+  "patientName": "Fernanda Martins",
+  "doctorId": 1,
+  "doctorName": "Pedro Cardoso",
+  "appointmentDate": "2024-12-24",
+  "status": "SCHEDULED"
+}
+```
+
+#### `GET /appointment/patient/{patientId}`
+Busca uma consulta pelo ID do paciente.
+
+Requisição:
+```
+GET /appointment/patient/2
+```
+
+Resposta:
+```json
+{
+  "id": 1,
+  "patientId": 2,
+  "patientName": "Fernanda Martins",
+  "doctorId": 1,
+  "doctorName": "Pedro Cardoso",
+  "appointmentDate": "2024-12-24",
+  "status": "SCHEDULED"
+}
+```
+
+#### `GET /appointment/doctor/{doctorId}`
+Busca uma consulta pelo ID do médico.
+
+Requisição:
+```
+GET /appointment/doctor/1
+```
+
+Resposta:
+```json
+{
+  "id": 1,
+  "patientId": 2,
+  "patientName": "Fernanda Martins",
+  "doctorId": 1,
+  "doctorName": "Pedro Cardoso",
+  "appointmentDate": "2024-12-24",
   "status": "SCHEDULED"
 }
 ```
