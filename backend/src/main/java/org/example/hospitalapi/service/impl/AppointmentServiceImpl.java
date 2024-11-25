@@ -6,6 +6,7 @@ import org.example.hospitalapi.dtos.UpdateAppointmentDto;
 import org.example.hospitalapi.entity.Appointment;
 import org.example.hospitalapi.entity.Doctor;
 import org.example.hospitalapi.entity.Patient;
+import org.example.hospitalapi.enums.StatusEnum;
 import org.example.hospitalapi.exceptions.ResourceNotFoundException;
 import org.example.hospitalapi.mapper.AppointmentMapper;
 import org.example.hospitalapi.repository.AppointmentRepository;
@@ -16,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import java.util.stream.Collectors;
+import java.util.List;
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService {
@@ -35,6 +38,38 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public Page<AppointmentDto> getAppointments(Pageable pageable) {
         return appointmentRepository.findAll(pageable).map(appointmentMapper::toDto);
+    }
+
+    @Override
+    public List<AppointmentDto> getAppointmentsByStatus(StatusEnum status) {
+        List<Appointment> appointments = appointmentRepository.findByStatus(status);
+        return appointments.stream()
+                .map(appointmentMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<AppointmentDto> getAppointmentsByPatientId(Long patientId) {
+        List<Appointment> appointments = appointmentRepository.findByPatient(
+                patientRepository.findById(patientId)
+                        .orElseThrow(() -> new RuntimeException("Patient not found"))
+        );
+
+        return appointments.stream()
+                .map(appointmentMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<AppointmentDto> getAppointmentsByDoctorId(Long doctorId) {
+        List<Appointment> appointments = appointmentRepository.findByDoctor(
+                doctorRepository.findById(doctorId)
+                        .orElseThrow(() -> new RuntimeException("Doctor not found"))
+        );
+
+        return appointments.stream()
+                .map(appointmentMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
