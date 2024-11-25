@@ -7,7 +7,7 @@ import org.example.hospitalapi.entity.Appointment;
 import org.example.hospitalapi.entity.Doctor;
 import org.example.hospitalapi.entity.Patient;
 import org.example.hospitalapi.enums.StatusEnum;
-import org.example.hospitalapi.exceptions.ResourceNotFoundException;
+import org.example.hospitalapi.exceptions.NotFoundException;
 import org.example.hospitalapi.mapper.AppointmentMapper;
 import org.example.hospitalapi.repository.AppointmentRepository;
 import org.example.hospitalapi.repository.DoctorRepository;
@@ -17,8 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import java.util.stream.Collectors;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService {
@@ -50,11 +51,10 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public List<AppointmentDto> getAppointmentsByPatientId(Long patientId) {
-        List<Appointment> appointments = appointmentRepository.findByPatient(
-                patientRepository.findById(patientId)
-                        .orElseThrow(() -> new RuntimeException("Patient not found"))
-        );
+        Patient patient = patientRepository.findById(patientId)
+                .orElseThrow(() -> new NotFoundException("Patient not found with id: " + patientId));
 
+        List<Appointment> appointments = appointmentRepository.findByPatient(patient);
         return appointments.stream()
                 .map(appointmentMapper::toDto)
                 .collect(Collectors.toList());
@@ -62,11 +62,10 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public List<AppointmentDto> getAppointmentsByDoctorId(Long doctorId) {
-        List<Appointment> appointments = appointmentRepository.findByDoctor(
-                doctorRepository.findById(doctorId)
-                        .orElseThrow(() -> new RuntimeException("Doctor not found"))
-        );
+        Doctor doctor = doctorRepository.findById(doctorId)
+                .orElseThrow(() -> new NotFoundException("Doctor not found with id: " + doctorId));
 
+        List<Appointment> appointments = appointmentRepository.findByDoctor(doctor);
         return appointments.stream()
                 .map(appointmentMapper::toDto)
                 .collect(Collectors.toList());
@@ -75,31 +74,30 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public AppointmentDto createAppointment(CreateAppointmentDto createAppointmentDto) {
         Doctor doctor = doctorRepository.findById(createAppointmentDto.doctorId())
-                .orElseThrow(() -> new ResourceNotFoundException("Doctor not found with id: " + createAppointmentDto.doctorId()));
+                .orElseThrow(() -> new NotFoundException("Doctor not found with id: " + createAppointmentDto.doctorId()));
 
         Patient patient = patientRepository.findById(createAppointmentDto.patientId())
-                .orElseThrow(() -> new ResourceNotFoundException("Patient not found with id: " + createAppointmentDto.patientId()));
+                .orElseThrow(() -> new NotFoundException("Patient not found with id: " + createAppointmentDto.patientId()));
 
         Appointment appointment = appointmentMapper.toModel(createAppointmentDto);
         appointment.setDoctor(doctor);
         appointment.setPatient(patient);
 
         appointment = appointmentRepository.save(appointment);
-
         return appointmentMapper.toDto(appointment);
     }
 
     @Override
     public AppointmentDto getAppointmentById(Long id) {
         Appointment appointment = appointmentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Appointment not found with id: " + id));
+                .orElseThrow(() -> new NotFoundException("Appointment not found with id: " + id));
         return appointmentMapper.toDto(appointment);
     }
 
     @Override
     public AppointmentDto partialUpdateAppointment(Long id, UpdateAppointmentDto updateAppointmentDto) {
         Appointment appointment = appointmentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Appointment not found with id: " + id));
+                .orElseThrow(() -> new NotFoundException("Appointment not found with id: " + id));
 
         if (updateAppointmentDto.appointmentDate() != null) {
             appointment.setAppointmentDate(updateAppointmentDto.appointmentDate());
@@ -114,7 +112,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public void deleteAppointment(Long id) {
         if (!appointmentRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Appointment not found with id: " + id);
+            throw new NotFoundException("Appointment not found with id: " + id);
         }
         appointmentRepository.deleteById(id);
     }

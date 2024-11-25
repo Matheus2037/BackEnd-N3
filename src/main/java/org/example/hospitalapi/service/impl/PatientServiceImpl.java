@@ -4,7 +4,7 @@ import org.example.hospitalapi.dtos.CreatePatientDto;
 import org.example.hospitalapi.dtos.UpdatePatientDto;
 import org.example.hospitalapi.dtos.PatientDto;
 import org.example.hospitalapi.entity.Patient;
-import org.example.hospitalapi.exceptions.ResourceNotFoundException;
+import org.example.hospitalapi.exceptions.NotFoundException;
 import org.example.hospitalapi.mapper.PatientMapper;
 import org.example.hospitalapi.repository.PatientRepository;
 import org.example.hospitalapi.service.PatientService;
@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -37,14 +36,14 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public PatientDto getPatientById(Long id) {
         Patient patient = patientRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Patient not found with id: " + id));
+                .orElseThrow(() -> new NotFoundException("Patient not found with id: " + id));
         return patientMapper.toDto(patient);
     }
 
     @Override
     public PatientDto partialUpdatePatient(Long id, UpdatePatientDto dto) {
         Patient patient = patientRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Patient not found with id: " + id));
+                .orElseThrow(() -> new NotFoundException("Patient not found with id: " + id));
 
         if (dto.firstName() != null) patient.setFirstName(dto.firstName());
         if (dto.lastName() != null) patient.setLastName(dto.lastName());
@@ -59,7 +58,7 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public void deletePatient(Long id) {
         if (!patientRepository.existsById(id)) {
-            throw new IllegalArgumentException("Patient not found with id: " + id);
+            throw new NotFoundException("Patient not found with id: " + id);
         }
         patientRepository.deleteById(id);
     }

@@ -4,7 +4,7 @@ import org.example.hospitalapi.dtos.CreateDoctorDto;
 import org.example.hospitalapi.dtos.DoctorDto;
 import org.example.hospitalapi.dtos.UpdateDoctorDto;
 import org.example.hospitalapi.entity.Doctor;
-import org.example.hospitalapi.exceptions.ResourceNotFoundException;
+import org.example.hospitalapi.exceptions.NotFoundException;
 import org.example.hospitalapi.mapper.DoctorMapper;
 import org.example.hospitalapi.repository.DoctorRepository;
 import org.example.hospitalapi.service.DoctorService;
@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 
 @Service
 public class DoctorServiceImpl implements DoctorService {
@@ -36,15 +35,17 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public DoctorDto getDoctorById(Long id) {
+        // Substituindo IllegalArgumentException por NotFoundException
         Doctor doctor = doctorRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Doctor not found with id: " + id));
+                .orElseThrow(() -> new NotFoundException("Doctor not found with id: " + id));
         return doctorMapper.toDto(doctor);
     }
 
     @Override
     public DoctorDto partialUpdateDoctor(Long id, UpdateDoctorDto dto) {
+        // Substituindo ResourceNotFoundException por NotFoundException
         Doctor doctor = doctorRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Doctor not found with id: " + id));
+                .orElseThrow(() -> new NotFoundException("Doctor not found with id: " + id));
 
         if (dto.firstName() != null) doctor.setFirstName(dto.firstName());
         if (dto.lastName() != null) doctor.setLastName(dto.lastName());
@@ -57,8 +58,9 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public void deleteDoctor(Long id) {
+        // Substituindo IllegalArgumentException por NotFoundException
         if (!doctorRepository.existsById(id)) {
-            throw new IllegalArgumentException("Doctor not found with id: " + id);
+            throw new NotFoundException("Doctor not found with id: " + id);
         }
         doctorRepository.deleteById(id);
     }
