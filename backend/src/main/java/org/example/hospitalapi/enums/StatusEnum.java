@@ -6,7 +6,9 @@ import lombok.Getter;
 public enum StatusEnum {
     SCHEDULED("Scheduled"),
     COMPLETED("Completed"),
-    CANCELED("Canceled");
+    CANCELED("Canceled"),
+    RESCHEDULED("Rescheduled"),
+    PENDING_CONFIRMATION("Pending Confirmation");
 
     private final String status;
 
