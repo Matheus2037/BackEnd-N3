@@ -3,14 +3,21 @@ package org.example.hospitalapi.service;
 import org.example.hospitalapi.dtos.AppointmentDto;
 import org.example.hospitalapi.dtos.CreateAppointmentDto;
 import org.example.hospitalapi.dtos.UpdateAppointmentDto;
+import org.example.hospitalapi.enums.StatusEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import java.util.List;
-import org.example.hospitalapi.enums.StatusEnum;
+
+import java.time.LocalDate;
 
 public interface AppointmentService {
 
     Page<AppointmentDto> getAppointments(Pageable pageable);
+
+    Page<AppointmentDto> getAppointmentsByStatus(StatusEnum status, Pageable pageable);
+
+    Page<AppointmentDto> getAppointmentsByPatientId(Long patientId, Pageable pageable);
+
+    Page<AppointmentDto> getAppointmentsByDoctorId(Long doctorId, Pageable pageable);
 
     AppointmentDto createAppointment(CreateAppointmentDto createAppointmentDto);
 
@@ -20,9 +27,5 @@ public interface AppointmentService {
 
     void deleteAppointment(Long id);
 
-    List<AppointmentDto> getAppointmentsByStatus(StatusEnum status);
-
-    List<AppointmentDto> getAppointmentsByPatientId(Long patientId);
-
-    List<AppointmentDto> getAppointmentsByDoctorId(Long doctorId);
+    Page<AppointmentDto> getAppointmentsByDate(LocalDate date, Pageable pageable);
 }

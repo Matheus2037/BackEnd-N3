@@ -18,8 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.time.LocalDate;
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService {
@@ -42,47 +41,33 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public List<AppointmentDto> getAppointmentsByStatus(StatusEnum status) {
-        List<Appointment> appointments = appointmentRepository.findByStatus(status);
-        return appointments.stream()
-                .map(appointmentMapper::toDto)
-                .collect(Collectors.toList());
+    public Page<AppointmentDto> getAppointmentsByStatus(StatusEnum status, Pageable pageable) {
+        return appointmentRepository.findByStatus(status, pageable).map(appointmentMapper::toDto);
     }
 
     @Override
-    public List<AppointmentDto> getAppointmentsByPatientId(Long patientId) {
+    public Page<AppointmentDto> getAppointmentsByPatientId(Long patientId, Pageable pageable) {
         Patient patient = patientRepository.findById(patientId)
                 .orElseThrow(() -> new NotFoundException("Patient not found with id: " + patientId));
-
-        List<Appointment> appointments = appointmentRepository.findByPatient(patient);
-        return appointments.stream()
-                .map(appointmentMapper::toDto)
-                .collect(Collectors.toList());
+        return appointmentRepository.findByPatient(patient, pageable).map(appointmentMapper::toDto);
     }
 
     @Override
-    public List<AppointmentDto> getAppointmentsByDoctorId(Long doctorId) {
+    public Page<AppointmentDto> getAppointmentsByDoctorId(Long doctorId, Pageable pageable) {
         Doctor doctor = doctorRepository.findById(doctorId)
                 .orElseThrow(() -> new NotFoundException("Doctor not found with id: " + doctorId));
-
-        List<Appointment> appointments = appointmentRepository.findByDoctor(doctor);
-        return appointments.stream()
-                .map(appointmentMapper::toDto)
-                .collect(Collectors.toList());
+        return appointmentRepository.findByDoctor(doctor, pageable).map(appointmentMapper::toDto);
     }
 
     @Override
     public AppointmentDto createAppointment(CreateAppointmentDto createAppointmentDto) {
         Doctor doctor = doctorRepository.findById(createAppointmentDto.doctorId())
                 .orElseThrow(() -> new NotFoundException("Doctor not found with id: " + createAppointmentDto.doctorId()));
-
         Patient patient = patientRepository.findById(createAppointmentDto.patientId())
                 .orElseThrow(() -> new NotFoundException("Patient not found with id: " + createAppointmentDto.patientId()));
-
         Appointment appointment = appointmentMapper.toModel(createAppointmentDto);
         appointment.setDoctor(doctor);
         appointment.setPatient(patient);
-
         appointment = appointmentRepository.save(appointment);
         return appointmentMapper.toDto(appointment);
     }
@@ -98,14 +83,12 @@ public class AppointmentServiceImpl implements AppointmentService {
     public AppointmentDto partialUpdateAppointment(Long id, UpdateAppointmentDto updateAppointmentDto) {
         Appointment appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Appointment not found with id: " + id));
-
         if (updateAppointmentDto.appointmentDate() != null) {
             appointment.setAppointmentDate(updateAppointmentDto.appointmentDate());
         }
         if (updateAppointmentDto.status() != null) {
             appointment.setStatus(updateAppointmentDto.status());
         }
-
         return appointmentMapper.toDto(appointmentRepository.save(appointment));
     }
 
@@ -115,5 +98,10 @@ public class AppointmentServiceImpl implements AppointmentService {
             throw new NotFoundException("Appointment not found with id: " + id);
         }
         appointmentRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<AppointmentDto> getAppointmentsByDate(LocalDate date, Pageable pageable) {
+        return appointmentRepository.findByAppointmentDate(date, pageable).map(appointmentMapper::toDto);
     }
 }

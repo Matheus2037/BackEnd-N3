@@ -28,6 +28,21 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
+    public Page<DoctorDto> getDoctorsByFirstName(String firstName, Pageable pageable) {
+        return doctorRepository.findByFirstName(firstName, pageable).map(doctorMapper::toDto);
+    }
+
+    @Override
+    public Page<DoctorDto> getDoctorsByRegistration(String registration, Pageable pageable) {
+        return doctorRepository.findByRegistration(registration, pageable).map(doctorMapper::toDto);
+    }
+
+    @Override
+    public Page<DoctorDto> getDoctorsByEmail(String email, Pageable pageable) {
+        return doctorRepository.findByEmail(email, pageable).map(doctorMapper::toDto);
+    }
+
+    @Override
     public DoctorDto createDoctor(CreateDoctorDto createDoctorDto) {
         Doctor doctor = doctorMapper.toModel(createDoctorDto);
         return doctorMapper.toDto(doctorRepository.save(doctor));
@@ -35,7 +50,6 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public DoctorDto getDoctorById(Long id) {
-        // Substituindo IllegalArgumentException por NotFoundException
         Doctor doctor = doctorRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Doctor not found with id: " + id));
         return doctorMapper.toDto(doctor);
@@ -43,7 +57,6 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public DoctorDto partialUpdateDoctor(Long id, UpdateDoctorDto dto) {
-        // Substituindo ResourceNotFoundException por NotFoundException
         Doctor doctor = doctorRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Doctor not found with id: " + id));
 
@@ -58,7 +71,6 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public void deleteDoctor(Long id) {
-        // Substituindo IllegalArgumentException por NotFoundException
         if (!doctorRepository.existsById(id)) {
             throw new NotFoundException("Doctor not found with id: " + id);
         }

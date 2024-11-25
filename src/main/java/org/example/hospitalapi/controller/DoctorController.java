@@ -5,6 +5,7 @@ import org.example.hospitalapi.dtos.*;
 import org.example.hospitalapi.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,9 @@ public class DoctorController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Page<DoctorDto> getDoctors(Pageable pageable) {
+    public Page<DoctorDto> getDoctors(@RequestParam(defaultValue = "0") int page,
+                                      @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
         return doctorService.getDoctors(pageable);
     }
 
@@ -31,6 +34,33 @@ public class DoctorController {
     @ResponseStatus(HttpStatus.OK)
     public DoctorDto getDoctorById(@PathVariable Long id) {
         return doctorService.getDoctorById(id);
+    }
+
+    @GetMapping("/first-name/{firstName}")
+    @ResponseStatus(HttpStatus.OK)
+    public Page<DoctorDto> getDoctorsByFirstName(@PathVariable String firstName,
+                                                 @RequestParam(defaultValue = "0") int page,
+                                                 @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return doctorService.getDoctorsByFirstName(firstName, pageable);
+    }
+
+    @GetMapping("/registration/{registration}")
+    @ResponseStatus(HttpStatus.OK)
+    public Page<DoctorDto> getDoctorsByRegistration(@PathVariable String registration,
+                                                    @RequestParam(defaultValue = "0") int page,
+                                                    @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return doctorService.getDoctorsByRegistration(registration, pageable);
+    }
+
+    @GetMapping("/email/{email}")
+    @ResponseStatus(HttpStatus.OK)
+    public Page<DoctorDto> getDoctorsByEmail(@PathVariable String email,
+                                             @RequestParam(defaultValue = "0") int page,
+                                             @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return doctorService.getDoctorsByEmail(email, pageable);
     }
 
     @PostMapping

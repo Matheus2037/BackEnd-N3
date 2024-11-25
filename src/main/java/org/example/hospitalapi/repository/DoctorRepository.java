@@ -3,20 +3,16 @@ package org.example.hospitalapi.repository;
 import java.util.List;
 
 import org.example.hospitalapi.enums.GenderEnum;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.example.hospitalapi.entity.Doctor;
 
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 
-//    TODO Implement custom queries
+    Page<Doctor> findByFirstName(String firstName, Pageable pageable);
 
-    List<Doctor> findByFirstName(String firstName);
+    Page<Doctor> findByRegistration(String registration, Pageable pageable);
 
-    List<Doctor> findByLastName(String lastName);
-
-    List<Doctor> findByGender(GenderEnum gender);
-
-    List<Doctor> findByRegistration(String registration);
-
-    List<Doctor> findByEmail(String email);
+    Page<Doctor> findByEmail(String email, Pageable pageable);
 }

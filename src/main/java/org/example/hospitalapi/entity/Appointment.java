@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.hospitalapi.enums.StatusEnum;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -27,7 +27,7 @@ public class Appointment {
     private Doctor doctor;
 
     @Column(nullable = false)
-    private LocalDateTime appointmentDate;
+    private LocalDate appointmentDate;
 
     @Column(nullable = false)
     private StatusEnum status;

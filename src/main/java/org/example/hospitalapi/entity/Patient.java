@@ -22,7 +22,7 @@ public class Patient {
     private String firstName;
     @Column(nullable = false)
     private String lastName;
-    @Column(nullable = false)
+    @Column
     private String email;
     @Column(nullable = false)
     private GenderEnum gender;

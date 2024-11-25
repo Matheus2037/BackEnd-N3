@@ -7,6 +7,7 @@ import org.example.hospitalapi.dtos.UpdatePatientDto;
 import org.example.hospitalapi.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,9 @@ public class PatientController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Page<PatientDto> getPatients(Pageable pageable) {
+    public Page<PatientDto> getPatients(@RequestParam(defaultValue = "0") int page,
+                                        @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
         return patientService.getPatients(pageable);
     }
 

@@ -14,6 +14,12 @@ public interface DoctorService {
 
     DoctorDto getDoctorById(Long id);
 
+    Page<DoctorDto> getDoctorsByFirstName(String firstName, Pageable pageable);
+
+    Page<DoctorDto> getDoctorsByRegistration(String registration, Pageable pageable);
+
+    Page<DoctorDto> getDoctorsByEmail(String email, Pageable pageable);
+
     DoctorDto partialUpdateDoctor(Long id, UpdateDoctorDto updateDoctorDto);
 
     void deleteDoctor(Long id);
