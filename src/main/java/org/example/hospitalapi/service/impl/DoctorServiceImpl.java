@@ -13,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class DoctorServiceImpl implements DoctorService {
 
@@ -46,6 +48,20 @@ public class DoctorServiceImpl implements DoctorService {
     public DoctorDto createDoctor(CreateDoctorDto createDoctorDto) {
         Doctor doctor = doctorMapper.toModel(createDoctorDto);
         return doctorMapper.toDto(doctorRepository.save(doctor));
+    }
+
+    @Override
+    public ArrayList<DoctorDto> createDoctors(ArrayList<CreateDoctorDto> createDoctorDtoList) {
+
+        ArrayList<DoctorDto> doctorDtoList =  new ArrayList<>();
+
+        for (CreateDoctorDto createDoctorDto : createDoctorDtoList) {
+            Doctor doctor = doctorMapper.toModel(createDoctorDto);
+            doctorDtoList.add(doctorMapper.toDto(doctor));
+            doctorMapper.toDto(doctorRepository.save(doctor));
+        }
+
+        return doctorDtoList;
     }
 
     @Override

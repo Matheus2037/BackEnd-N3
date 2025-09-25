@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @RestController
 @RequestMapping("/doctor")
 public class DoctorController {
@@ -67,6 +69,12 @@ public class DoctorController {
     @ResponseStatus(HttpStatus.CREATED)
     public DoctorDto createDoctor(@RequestBody @Valid CreateDoctorDto createDoctorDto) {
         return doctorService.createDoctor(createDoctorDto);
+    }
+
+    @PostMapping("/cad")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ArrayList<DoctorDto> createDoctors(@RequestBody @Valid ArrayList<CreateDoctorDto> createDoctorDtoList) {
+        return doctorService.createDoctors(createDoctorDtoList);
     }
 
     @PatchMapping("/{id}")

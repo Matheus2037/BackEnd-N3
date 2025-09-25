@@ -6,11 +6,15 @@ import org.example.hospitalapi.dtos.UpdateDoctorDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.ArrayList;
+
 public interface DoctorService {
 
     Page<DoctorDto> getDoctors(Pageable pageable);
 
     DoctorDto createDoctor(CreateDoctorDto createDoctorDto);
+
+    ArrayList<DoctorDto> createDoctors(ArrayList<CreateDoctorDto> createDoctorDtoList);
 
     DoctorDto getDoctorById(Long id);
 
