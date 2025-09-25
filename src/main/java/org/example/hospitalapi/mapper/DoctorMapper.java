@@ -23,14 +23,15 @@ public class DoctorMapper {
     }
 
     public Doctor toModel(CreateDoctorDto createDoctorDto) {
-        return new Doctor(
-                0,
-                createDoctorDto.firstName(),
-                createDoctorDto.lastName(),
-                createDoctorDto.registration(),
-                createDoctorDto.email(),
-                createDoctorDto.gender(),
-                new ArrayList<>()
-        );
+        Doctor doctor = new Doctor();
+
+        doctor.setFirstName(createDoctorDto.firstName());
+        doctor.setLastName(createDoctorDto.lastName());
+        doctor.setRegistration(createDoctorDto.registration());
+        doctor.setEmail(createDoctorDto.email());
+        doctor.setGender(createDoctorDto.gender());
+        doctor.setAppointments(new ArrayList<>());
+
+        return doctor;
     }
 }

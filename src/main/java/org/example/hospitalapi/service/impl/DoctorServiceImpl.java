@@ -14,6 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DoctorServiceImpl implements DoctorService {
@@ -53,15 +55,15 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public ArrayList<DoctorDto> createDoctors(ArrayList<CreateDoctorDto> createDoctorDtoList) {
 
-        ArrayList<DoctorDto> doctorDtoList =  new ArrayList<>();
+        List<Doctor> doctorsParaSalvar = createDoctorDtoList.stream()
+                .map(doctorMapper::toModel)
+                .collect(Collectors.toList());
 
-        for (CreateDoctorDto createDoctorDto : createDoctorDtoList) {
-            Doctor doctor = doctorMapper.toModel(createDoctorDto);
-            doctorDtoList.add(doctorMapper.toDto(doctor));
-            doctorMapper.toDto(doctorRepository.save(doctor));
-        }
+        List<Doctor> doctorsSalvos = doctorRepository.saveAll(doctorsParaSalvar);
 
-        return doctorDtoList;
+        return (ArrayList<DoctorDto>) doctorsSalvos.stream()
+                .map(doctorMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
