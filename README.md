@@ -197,6 +197,69 @@ Resposta:
 }
 ```
 
+#### `POST /doctor/cad`
+Cria novos médicos com apenas uma requisição.
+
+Requisição:
+```json
+[
+  {
+    "firstName": "Pedro",
+    "lastName": "Cardoso",
+    "registration": "12345-SC",
+    "email": "pedro@gmail.com",
+    "gender": "MALE"
+  },
+  {
+    "firstName": "Lucas",
+    "lastName": "Martins",
+    "registration": "67891-SC",
+    "email": "lucas@gmail.com",
+    "gender": "MALE"
+  },
+  {
+    "firstName": "Carla",
+    "lastName": "Rodrigues",
+    "registration": "54321-SC",
+    "email": "carla@gmail.com",
+    "gender": "FEMALE"
+  }
+]
+```
+
+Resposta:
+```json
+[
+  {
+    "id": 1,
+    "firstName": "Pedro",
+    "lastName": "Cardoso",
+    "registration": "12345-SC",
+    "email": "pedro@gmail.com",
+    "gender": "MALE"
+    "totalAppointments": 0
+  },
+  {
+    "id": 2,
+    "firstName": "Lucas",
+    "lastName": "Martins",
+    "registration": "67891-SC",
+    "email": "lucas@gmail.com",
+    "gender": "MALE"
+    "totalAppointments": 0
+  },
+  {
+    "id": 3,
+    "firstName": "Carla",
+    "lastName": "Rodrigues",
+    "registration": "54321-SC",
+    "email": "carla@gmail.com",
+    "gender": "FEMALE"
+    "totalAppointments": 0
+  }
+]
+```
+
 #### `PATCH /doctor`
 Edita um novo médico já registrado.
 
