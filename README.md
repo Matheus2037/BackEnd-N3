@@ -236,7 +236,7 @@ Resposta:
     "lastName": "Cardoso",
     "registration": "12345-SC",
     "email": "pedro@gmail.com",
-    "gender": "MALE"
+    "gender": "MALE",
     "totalAppointments": 0
   },
   {
@@ -245,7 +245,7 @@ Resposta:
     "lastName": "Martins",
     "registration": "67891-SC",
     "email": "lucas@gmail.com",
-    "gender": "MALE"
+    "gender": "MALE",
     "totalAppointments": 0
   },
   {
@@ -254,7 +254,7 @@ Resposta:
     "lastName": "Rodrigues",
     "registration": "54321-SC",
     "email": "carla@gmail.com",
-    "gender": "FEMALE"
+    "gender": "FEMALE",
     "totalAppointments": 0
   }
 ]
@@ -383,6 +383,63 @@ Resposta:
   "gender": "FEMALE",
   "totalAppointments": 0
 }
+```
+
+#### `POST /patient/cad`
+Criar multiplos pacientes a partir de uma requisição.
+
+Requisição:
+```json
+[
+    {
+      "firstName": "Fernanda",
+      "lastName": "Martins",
+      "email": "fernanda@email.com",
+      "gender": "FEMALE"
+    },
+  {
+    "firstName": "Matheus",
+    "lastName": "Gastaldi",
+    "email": "matheus@email.com",
+    "gender": "MALE"
+  },
+  {
+    "firstName": "Carlos",
+    "lastName": "Rodrigues",
+    "email": "carlos@email.com",
+    "gender": "MALE"
+  }
+]
+```
+
+Resposta:
+```json
+[
+  {
+    "id": "1",
+    "firstName": "Fernanda",
+    "lastName": "Martins",
+    "email": "fernanda@email.com",
+    "gender": "FEMALE",
+    "totalAppointments": 0
+  },
+  {
+    "id": "2",
+    "firstName": "Matheus",
+    "lastName": "Gastaldi",
+    "email": "matheus@email.com",
+    "gender": "MALE",
+    "totalAppointments": 0
+  },
+  {
+    "id": "3",
+    "firstName": "Carlos",
+    "lastName": "Rodrigues",
+    "email": "carlos@email.com",
+    "gender": "MALE",
+    "totalAppointments": 0
+  }
+]
 ```
 
 #### `PATCH /patient`
