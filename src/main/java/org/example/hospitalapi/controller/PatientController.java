@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @RestController
 @RequestMapping("/patient")
 public class PatientController {
@@ -41,6 +43,12 @@ public class PatientController {
     @ResponseStatus(HttpStatus.CREATED)
     public PatientDto createPatient(@RequestBody @Valid CreatePatientDto createPatientDto) {
         return patientService.createPatient(createPatientDto);
+    }
+
+    @PostMapping("/cad")
+    @ResponseStatus(HttpStatus.OK)
+    public ArrayList<PatientDto> createPatientList(@RequestBody @Valid ArrayList<CreatePatientDto> createPatientList) {
+        return patientService.createPatientList(createPatientList);
     }
 
     @PatchMapping("/{id}")

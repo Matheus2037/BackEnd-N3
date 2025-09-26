@@ -13,6 +13,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class PatientServiceImpl implements PatientService {
 
@@ -31,6 +35,20 @@ public class PatientServiceImpl implements PatientService {
     public PatientDto createPatient(CreatePatientDto createPatientDto) {
         Patient patient = patientMapper.toModel(createPatientDto);
         return patientMapper.toDto(patientRepository.save(patient));
+    }
+
+    @Override
+    public ArrayList<PatientDto> createPatientList(ArrayList<CreatePatientDto> createPatientDto) {
+
+        List<Patient> patientParaSalvar = createPatientDto.stream()
+                .map(patientMapper::toModel)
+                .collect(Collectors.toList());
+
+        List<Patient> patientsSalvos = patientRepository.saveAll(patientParaSalvar);
+
+        return (ArrayList<PatientDto>) patientsSalvos.stream()
+                .map(patientMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
