@@ -391,12 +391,12 @@ Criar multiplos pacientes a partir de uma requisição.
 Requisição:
 ```json
 [
-    {
-      "firstName": "Fernanda",
-      "lastName": "Martins",
-      "email": "fernanda@email.com",
-      "gender": "FEMALE"
-    },
+  {
+    "firstName": "Fernanda",
+    "lastName": "Martins",
+    "email": "fernanda@email.com",
+    "gender": "FEMALE"
+  },
   {
     "firstName": "Matheus",
     "lastName": "Gastaldi",
@@ -416,7 +416,7 @@ Resposta:
 ```json
 [
   {
-    "id": "1",
+    "id": 1,
     "firstName": "Fernanda",
     "lastName": "Martins",
     "email": "fernanda@email.com",
@@ -424,7 +424,7 @@ Resposta:
     "totalAppointments": 0
   },
   {
-    "id": "2",
+    "id": 2,
     "firstName": "Matheus",
     "lastName": "Gastaldi",
     "email": "matheus@email.com",
@@ -432,7 +432,7 @@ Resposta:
     "totalAppointments": 0
   },
   {
-    "id": "3",
+    "id": 3,
     "firstName": "Carlos",
     "lastName": "Rodrigues",
     "email": "carlos@email.com",
