@@ -1,27 +1,25 @@
-version: '3.8'
 
 services:
   backend:
+    image: matheusdasilvagastaldi/hospital-api-application:v1
     build:
-      context: ./backend
+      context: .
       dockerfile: Dockerfile
+
     ports:
       - "8080:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:h2:tcp://db:1521/mem:hospitaldb
+      - SPRING_DATASOURCE_USERNAME=sa
+      - SPRING_DATASOURCE_PASSWORD=senhatop123
     depends_on:
       - db
 
   db:
-    image: h2database/h2
+    image: oscarfonts/h2
     ports:
-      - "9092:9092"
+      - "1521:1521"
+      - "81:81"
     environment:
-      - H2_OPTIONS=-tcp -tcpAllowOthers -ifNotExists
-
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
+      - H2_OPTIONS=-ifNotExists
