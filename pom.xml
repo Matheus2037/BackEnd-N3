@@ -92,9 +92,19 @@
                     <failsOnError>true</failsOnError>
                     <linkXRef>false</linkXRef>
                 </configuration>
-                <!-- SEM <executions> por enquanto: roda só quando chamado
-                     explicitamente (mvn checkstyle:check). Ao final do projeto,
-                     quando o código estiver limpo, religamos no ciclo de build. -->
+                <executions>
+                    <execution>
+                        <id>validate-checkstyle</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <violationSeverity>warning</violationSeverity>
+                            <failOnViolation>false</failOnViolation>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <!-- JaCoCo: medição de cobertura de testes -->
