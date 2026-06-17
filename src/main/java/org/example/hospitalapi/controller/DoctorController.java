@@ -1,7 +1,7 @@
 package org.example.hospitalapi.controller;
 
 import jakarta.validation.Valid;
-import java.util.ArrayList;
+import java.util.List;
 import org.example.hospitalapi.dtos.CreateDoctorDto;
 import org.example.hospitalapi.dtos.DoctorDto;
 import org.example.hospitalapi.dtos.UpdateDoctorDto;
@@ -80,8 +80,8 @@ public class DoctorController {
 
   @PostMapping("/batch")
   @ResponseStatus(HttpStatus.CREATED)
-  public ArrayList<DoctorDto> createDoctors(
-      @RequestBody @Valid ArrayList<CreateDoctorDto> createDoctorDtoList) {
+  public List<DoctorDto> createDoctors(
+      @RequestBody @Valid List<CreateDoctorDto> createDoctorDtoList) {
     return doctorService.createDoctors(createDoctorDtoList);
   }
 

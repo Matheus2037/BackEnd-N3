@@ -1,6 +1,6 @@
 package org.example.hospitalapi.service;
 
-import java.util.ArrayList;
+import java.util.List;
 import org.example.hospitalapi.dtos.CreateDoctorDto;
 import org.example.hospitalapi.dtos.DoctorDto;
 import org.example.hospitalapi.dtos.UpdateDoctorDto;
@@ -13,7 +13,7 @@ public interface DoctorService {
 
   DoctorDto createDoctor(CreateDoctorDto createDoctorDto);
 
-  ArrayList<DoctorDto> createDoctors(ArrayList<CreateDoctorDto> createDoctorDtoList);
+  List<DoctorDto> createDoctors(List<CreateDoctorDto> createDoctorDtoList);
 
   DoctorDto getDoctorById(Long id);
 

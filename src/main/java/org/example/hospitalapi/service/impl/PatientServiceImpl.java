@@ -1,6 +1,5 @@
 package org.example.hospitalapi.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.example.hospitalapi.dtos.CreatePatientDto;
@@ -38,7 +37,7 @@ public class PatientServiceImpl implements PatientService {
   }
 
   @Override
-  public ArrayList<PatientDto> createPatientList(ArrayList<CreatePatientDto> createPatientDto) {
+  public List<PatientDto> createPatientList(List<CreatePatientDto> createPatientDto) {
 
     List<Patient> patientsToSave = createPatientDto.stream()
         .map(patientMapper::toModel)
@@ -46,7 +45,7 @@ public class PatientServiceImpl implements PatientService {
 
     List<Patient> savedPatients = patientRepository.saveAll(patientsToSave);
 
-    return (ArrayList<PatientDto>) savedPatients.stream()
+    return savedPatients.stream()
         .map(patientMapper::toDto)
         .collect(Collectors.toList());
   }

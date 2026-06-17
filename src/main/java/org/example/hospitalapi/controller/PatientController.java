@@ -1,7 +1,8 @@
 package org.example.hospitalapi.controller;
 
 import jakarta.validation.Valid;
-import java.util.ArrayList;
+import java.util.List;
+import org.springframework.http.ResponseEntity;
 import org.example.hospitalapi.dtos.CreatePatientDto;
 import org.example.hospitalapi.dtos.PatientDto;
 import org.example.hospitalapi.dtos.UpdatePatientDto;
@@ -52,10 +53,9 @@ public class PatientController {
   }
 
   @PostMapping("/batch")
-  @ResponseStatus(HttpStatus.OK)
-  public ArrayList<PatientDto> createPatientList(
-      @RequestBody @Valid ArrayList<CreatePatientDto> createPatientList) {
-    return patientService.createPatientList(createPatientList);
+  public ResponseEntity<List<PatientDto>> createPatientList(
+      @RequestBody @Valid List<CreatePatientDto> createPatientList) {
+    return ResponseEntity.status(HttpStatus.CREATED).body(patientService.createPatientList(createPatientList));
   }
 
   @PatchMapping("/{id}")
