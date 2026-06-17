@@ -1,12 +1,13 @@
 package org.example.hospitalapi.dtos;
 
+import java.time.LocalDate;
 import org.example.hospitalapi.enums.StatusEnum;
 
-import java.time.LocalDate;
-
 public record UpdateAppointmentDto(
-        long patientId,
-        long doctorId,
-        LocalDate appointmentDate,
-        StatusEnum status
-) {}
+    long patientId,
+    long doctorId,
+    LocalDate appointmentDate,
+    StatusEnum status
+) {
+
+}

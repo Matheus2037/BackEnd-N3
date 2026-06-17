@@ -1,12 +1,17 @@
 package org.example.hospitalapi.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.hospitalapi.enums.GenderEnum;
-
-import java.util.List;
 
 @Entity
 @Data
@@ -14,21 +19,21 @@ import java.util.List;
 @AllArgsConstructor
 public class Doctor {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private long id;
 
-    @Column(nullable = false)
-    private String firstName;
-    @Column(nullable = false)
-    private String lastName;
-    @Column(nullable = false, unique = true)
-    private String registration;
-    @Column(nullable = false, unique = true)
-    private String email;
-    @Column(nullable = false)
-    private GenderEnum gender;
+  @Column(nullable = false)
+  private String firstName;
+  @Column(nullable = false)
+  private String lastName;
+  @Column(nullable = false, unique = true)
+  private String registration;
+  @Column(nullable = false, unique = true)
+  private String email;
+  @Column(nullable = false)
+  private GenderEnum gender;
 
-    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
-    private List<Appointment> appointments;
+  @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
+  private List<Appointment> appointments;
 }

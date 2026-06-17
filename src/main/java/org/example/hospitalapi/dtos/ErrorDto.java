@@ -1,11 +1,12 @@
 package org.example.hospitalapi.dtos;
 
+import java.time.LocalDateTime;
 import org.springframework.http.HttpStatus;
 
-import java.time.LocalDateTime;
-
 public record ErrorDto(
-        LocalDateTime timestamp,
-        HttpStatus error,
-        String message
-) {}
+    LocalDateTime timestamp,
+    HttpStatus error,
+    String message
+) {
+
+}

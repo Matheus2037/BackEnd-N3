@@ -1,15 +1,14 @@
 package org.example.hospitalapi.exceptions;
 
 import jakarta.validation.ConstraintViolationException;
+import java.time.LocalDateTime;
+import org.example.hospitalapi.dtos.ErrorDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.example.hospitalapi.dtos.ErrorDto;
-
-import java.time.LocalDateTime;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -39,7 +38,8 @@ public class GlobalExceptionHandler {
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ResponseBody
   public ErrorDto handleValidationException(MethodArgumentNotValidException e) {
-    return new ErrorDto(LocalDateTime.now(), HttpStatus.BAD_REQUEST, e.getAllErrors().get(0).getDefaultMessage());
+    return new ErrorDto(LocalDateTime.now(), HttpStatus.BAD_REQUEST,
+        e.getAllErrors().get(0).getDefaultMessage());
   }
 
   @ExceptionHandler(ConstraintViolationException.class)

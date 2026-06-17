@@ -7,32 +7,32 @@ import jakarta.validation.ConstraintValidatorContext;
 
 public class EntityExistsValidator implements ConstraintValidator<EntityExists, Object> {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+  @PersistenceContext
+  private EntityManager entityManager;
 
-    private Class<?> entityClass;
-    private String fieldName;
+  private Class<?> entityClass;
+  private String fieldName;
 
-    @Override
-    public void initialize(EntityExists constraintAnnotation) {
-        this.entityClass = constraintAnnotation.entity();
-        this.fieldName = constraintAnnotation.fieldName();
+  @Override
+  public void initialize(EntityExists constraintAnnotation) {
+    this.entityClass = constraintAnnotation.entity();
+    this.fieldName = constraintAnnotation.fieldName();
+  }
+
+  @Override
+  public boolean isValid(Object value, ConstraintValidatorContext context) {
+    if (value == null) {
+      return true;
     }
 
-    @Override
-    public boolean isValid(Object value, ConstraintValidatorContext context) {
-        if (value == null) {
-            return true;
-        }
+    String query = String.format("SELECT COUNT(e) > 0 FROM %s e WHERE e.%s = :value",
+        entityClass.getSimpleName(),
+        fieldName);
 
-        String query = String.format("SELECT COUNT(e) > 0 FROM %s e WHERE e.%s = :value",
-                entityClass.getSimpleName(),
-                fieldName);
+    Boolean exists = entityManager.createQuery(query, Boolean.class)
+        .setParameter("value", value)
+        .getSingleResult();
 
-        Boolean exists = entityManager.createQuery(query, Boolean.class)
-                .setParameter("value", value)
-                .getSingleResult();
-
-        return exists;
-    }
+    return exists;
+  }
 }

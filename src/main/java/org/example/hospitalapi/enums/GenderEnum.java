@@ -4,18 +4,18 @@ import lombok.Getter;
 
 @Getter
 public enum GenderEnum {
-    MALE("Male"),
-    FEMALE("Female"),
-    OTHER("Other");
+  MALE("Male"),
+  FEMALE("Female"),
+  OTHER("Other");
 
-    private final String gender;
+  private final String gender;
 
-    GenderEnum(String gender) {
-        this.gender = gender;
-    }
+  GenderEnum(String gender) {
+    this.gender = gender;
+  }
 
-    @Override
-    public String toString() {
-        return this.gender;
-    }
+  @Override
+  public String toString() {
+    return this.gender;
+  }
 }
