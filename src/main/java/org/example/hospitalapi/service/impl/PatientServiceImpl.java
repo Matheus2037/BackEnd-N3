@@ -11,7 +11,6 @@ import org.example.hospitalapi.exceptions.NotFoundException;
 import org.example.hospitalapi.mapper.PatientMapper;
 import org.example.hospitalapi.repository.PatientRepository;
 import org.example.hospitalapi.service.PatientService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -19,11 +18,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class PatientServiceImpl implements PatientService {
 
-  @Autowired
-  private PatientRepository patientRepository;
+  private final PatientRepository patientRepository;
+  private final PatientMapper patientMapper;
 
-  @Autowired
-  private PatientMapper patientMapper;
+  public PatientServiceImpl(PatientRepository patientRepository, PatientMapper patientMapper) {
+    this.patientRepository = patientRepository;
+    this.patientMapper = patientMapper;
+  }
 
   @Override
   public Page<PatientDto> getPatients(Pageable pageable) {

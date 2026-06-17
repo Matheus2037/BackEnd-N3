@@ -14,7 +14,6 @@ import org.example.hospitalapi.repository.AppointmentRepository;
 import org.example.hospitalapi.repository.DoctorRepository;
 import org.example.hospitalapi.repository.PatientRepository;
 import org.example.hospitalapi.service.AppointmentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,17 +21,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class AppointmentServiceImpl implements AppointmentService {
 
-  @Autowired
-  private AppointmentRepository appointmentRepository;
+  private final AppointmentRepository appointmentRepository;
+  private final DoctorRepository doctorRepository;
+  private final PatientRepository patientRepository;
+  private final AppointmentMapper appointmentMapper;
 
-  @Autowired
-  private DoctorRepository doctorRepository;
-
-  @Autowired
-  private PatientRepository patientRepository;
-
-  @Autowired
-  private AppointmentMapper appointmentMapper;
+  public AppointmentServiceImpl(AppointmentRepository appointmentRepository,
+      DoctorRepository doctorRepository,
+      PatientRepository patientRepository,
+      AppointmentMapper appointmentMapper) {
+    this.appointmentRepository = appointmentRepository;
+    this.doctorRepository = doctorRepository;
+    this.patientRepository = patientRepository;
+    this.appointmentMapper = appointmentMapper;
+  }
 
   @Override
   public Page<AppointmentDto> getAppointments(Pageable pageable) {

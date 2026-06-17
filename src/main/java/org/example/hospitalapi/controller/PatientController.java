@@ -6,7 +6,6 @@ import org.example.hospitalapi.dtos.CreatePatientDto;
 import org.example.hospitalapi.dtos.PatientDto;
 import org.example.hospitalapi.dtos.UpdatePatientDto;
 import org.example.hospitalapi.service.PatientService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -28,7 +27,6 @@ public class PatientController {
 
   private final PatientService patientService;
 
-  @Autowired
   public PatientController(PatientService patientService) {
     this.patientService = patientService;
   }

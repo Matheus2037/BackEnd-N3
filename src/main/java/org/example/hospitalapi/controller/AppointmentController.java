@@ -7,7 +7,6 @@ import org.example.hospitalapi.dtos.CreateAppointmentDto;
 import org.example.hospitalapi.dtos.UpdateAppointmentDto;
 import org.example.hospitalapi.enums.StatusEnum;
 import org.example.hospitalapi.service.AppointmentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,8 +26,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/appointment")
 public class AppointmentController {
 
-  @Autowired
-  private AppointmentService appointmentService;
+  private final AppointmentService appointmentService;
+
+  public AppointmentController(AppointmentService appointmentService) {
+    this.appointmentService = appointmentService;
+  }
 
   @GetMapping
   @ResponseStatus(HttpStatus.OK)

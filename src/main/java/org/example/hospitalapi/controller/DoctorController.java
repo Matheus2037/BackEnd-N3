@@ -6,7 +6,6 @@ import org.example.hospitalapi.dtos.CreateDoctorDto;
 import org.example.hospitalapi.dtos.DoctorDto;
 import org.example.hospitalapi.dtos.UpdateDoctorDto;
 import org.example.hospitalapi.service.DoctorService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,10 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/doctor")
 public class DoctorController {
 
-  @Autowired
-  private DoctorService doctorService;
+  private final DoctorService doctorService;
 
-  @Autowired
   public DoctorController(DoctorService doctorService) {
     this.doctorService = doctorService;
   }
