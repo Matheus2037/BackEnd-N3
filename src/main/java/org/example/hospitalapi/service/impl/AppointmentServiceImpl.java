@@ -48,26 +48,20 @@ public class AppointmentServiceImpl implements AppointmentService {
 
   @Override
   public Page<AppointmentDto> getAppointmentsByPatientId(Long patientId, Pageable pageable) {
-    Patient patient = patientRepository.findById(patientId)
-        .orElseThrow(() -> new NotFoundException("Patient not found with id: " + patientId));
+    Patient patient = findPatientOrThrow(patientId);
     return appointmentRepository.findByPatient(patient, pageable).map(appointmentMapper::toDto);
   }
 
   @Override
   public Page<AppointmentDto> getAppointmentsByDoctorId(Long doctorId, Pageable pageable) {
-    Doctor doctor = doctorRepository.findById(doctorId)
-        .orElseThrow(() -> new NotFoundException("Doctor not found with id: " + doctorId));
+    Doctor doctor = findDoctorOrThrow(doctorId);
     return appointmentRepository.findByDoctor(doctor, pageable).map(appointmentMapper::toDto);
   }
 
   @Override
   public AppointmentDto createAppointment(CreateAppointmentDto createAppointmentDto) {
-    Doctor doctor = doctorRepository.findById(createAppointmentDto.doctorId())
-        .orElseThrow(() -> new NotFoundException(
-            "Doctor not found with id: " + createAppointmentDto.doctorId()));
-    Patient patient = patientRepository.findById(createAppointmentDto.patientId())
-        .orElseThrow(() -> new NotFoundException(
-            "Patient not found with id: " + createAppointmentDto.patientId()));
+    Doctor doctor = findDoctorOrThrow(createAppointmentDto.doctorId());
+    Patient patient = findPatientOrThrow(createAppointmentDto.patientId());
     Appointment appointment = appointmentMapper.toModel(createAppointmentDto);
     appointment.setDoctor(doctor);
     appointment.setPatient(patient);
@@ -77,16 +71,13 @@ public class AppointmentServiceImpl implements AppointmentService {
 
   @Override
   public AppointmentDto getAppointmentById(Long id) {
-    Appointment appointment = appointmentRepository.findById(id)
-        .orElseThrow(() -> new NotFoundException("Appointment not found with id: " + id));
-    return appointmentMapper.toDto(appointment);
+    return appointmentMapper.toDto(findAppointmentOrThrow(id));
   }
 
   @Override
   public AppointmentDto partialUpdateAppointment(Long id,
       UpdateAppointmentDto updateAppointmentDto) {
-    Appointment appointment = appointmentRepository.findById(id)
-        .orElseThrow(() -> new NotFoundException("Appointment not found with id: " + id));
+    Appointment appointment = findAppointmentOrThrow(id);
     if (updateAppointmentDto.appointmentDate() != null) {
       appointment.setAppointmentDate(updateAppointmentDto.appointmentDate());
     }
@@ -98,9 +89,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
   @Override
   public void deleteAppointment(Long id) {
-    if (!appointmentRepository.existsById(id)) {
-      throw new NotFoundException("Appointment not found with id: " + id);
-    }
+    findAppointmentOrThrow(id);
     appointmentRepository.deleteById(id);
   }
 
@@ -108,5 +97,20 @@ public class AppointmentServiceImpl implements AppointmentService {
   public Page<AppointmentDto> getAppointmentsByDate(LocalDate date, Pageable pageable) {
     return appointmentRepository.findByAppointmentDate(date, pageable)
         .map(appointmentMapper::toDto);
+  }
+
+  private Appointment findAppointmentOrThrow(Long id) {
+    return appointmentRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException("Appointment not found with id: " + id));
+  }
+
+  private Doctor findDoctorOrThrow(Long id) {
+    return doctorRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException("Doctor not found with id: " + id));
+  }
+
+  private Patient findPatientOrThrow(Long id) {
+    return patientRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException("Patient not found with id: " + id));
   }
 }

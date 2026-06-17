@@ -68,15 +68,12 @@ public class DoctorServiceImpl implements DoctorService {
 
   @Override
   public DoctorDto getDoctorById(Long id) {
-    Doctor doctor = doctorRepository.findById(id)
-        .orElseThrow(() -> new NotFoundException("Doctor not found with id: " + id));
-    return doctorMapper.toDto(doctor);
+    return doctorMapper.toDto(findDoctorOrThrow(id));
   }
 
   @Override
   public DoctorDto partialUpdateDoctor(Long id, UpdateDoctorDto dto) {
-    Doctor doctor = doctorRepository.findById(id)
-        .orElseThrow(() -> new NotFoundException("Doctor not found with id: " + id));
+    Doctor doctor = findDoctorOrThrow(id);
 
     if (dto.firstName() != null) {
       doctor.setFirstName(dto.firstName());
@@ -97,9 +94,12 @@ public class DoctorServiceImpl implements DoctorService {
 
   @Override
   public void deleteDoctor(Long id) {
-    if (!doctorRepository.existsById(id)) {
-      throw new NotFoundException("Doctor not found with id: " + id);
-    }
+    findDoctorOrThrow(id);
     doctorRepository.deleteById(id);
+  }
+
+  private Doctor findDoctorOrThrow(Long id) {
+    return doctorRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException("Doctor not found with id: " + id));
   }
 }

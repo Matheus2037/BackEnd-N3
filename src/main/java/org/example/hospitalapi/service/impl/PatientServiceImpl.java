@@ -53,15 +53,12 @@ public class PatientServiceImpl implements PatientService {
 
   @Override
   public PatientDto getPatientById(Long id) {
-    Patient patient = patientRepository.findById(id)
-        .orElseThrow(() -> new NotFoundException("Patient not found with id: " + id));
-    return patientMapper.toDto(patient);
+    return patientMapper.toDto(findPatientOrThrow(id));
   }
 
   @Override
   public PatientDto partialUpdatePatient(Long id, UpdatePatientDto dto) {
-    Patient patient = patientRepository.findById(id)
-        .orElseThrow(() -> new NotFoundException("Patient not found with id: " + id));
+    Patient patient = findPatientOrThrow(id);
 
     if (dto.firstName() != null) {
       patient.setFirstName(dto.firstName());
@@ -83,9 +80,12 @@ public class PatientServiceImpl implements PatientService {
 
   @Override
   public void deletePatient(Long id) {
-    if (!patientRepository.existsById(id)) {
-      throw new NotFoundException("Patient not found with id: " + id);
-    }
+    findPatientOrThrow(id);
     patientRepository.deleteById(id);
+  }
+
+  private Patient findPatientOrThrow(Long id) {
+    return patientRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException("Patient not found with id: " + id));
   }
 }
