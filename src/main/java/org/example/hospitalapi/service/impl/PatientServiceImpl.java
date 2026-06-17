@@ -40,13 +40,13 @@ public class PatientServiceImpl implements PatientService {
   @Override
   public ArrayList<PatientDto> createPatientList(ArrayList<CreatePatientDto> createPatientDto) {
 
-    List<Patient> patientParaSalvar = createPatientDto.stream()
+    List<Patient> patientsToSave = createPatientDto.stream()
         .map(patientMapper::toModel)
         .collect(Collectors.toList());
 
-    List<Patient> patientsSalvos = patientRepository.saveAll(patientParaSalvar);
+    List<Patient> savedPatients = patientRepository.saveAll(patientsToSave);
 
-    return (ArrayList<PatientDto>) patientsSalvos.stream()
+    return (ArrayList<PatientDto>) savedPatients.stream()
         .map(patientMapper::toDto)
         .collect(Collectors.toList());
   }

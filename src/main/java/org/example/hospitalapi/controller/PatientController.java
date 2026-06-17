@@ -51,7 +51,7 @@ public class PatientController {
     return patientService.createPatient(createPatientDto);
   }
 
-  @PostMapping("/cad")
+  @PostMapping("/batch")
   @ResponseStatus(HttpStatus.OK)
   public ArrayList<PatientDto> createPatientList(
       @RequestBody @Valid ArrayList<CreatePatientDto> createPatientList) {

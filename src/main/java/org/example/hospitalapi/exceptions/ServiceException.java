@@ -8,8 +8,8 @@ public class ServiceException extends RuntimeException {
   private final HttpStatus status;
   private final LocalDateTime timestamp;
 
-  public ServiceException(String mensagem, HttpStatus status) {
-    super(mensagem);
+  public ServiceException(String message, HttpStatus status) {
+    super(message);
     this.status = status;
     this.timestamp = LocalDateTime.now();
   }
