@@ -36,3 +36,6 @@ build/
 *.h2.db
 *.mv.db
 *.trace.db
+
+### Environment variables ###
+.env

@@ -11,9 +11,20 @@ Para executar o projeto (com Docker):
 
 Para executar o projeto (sem Docker):
 
-1. Configure o arquivo `application.properties` com as informações do banco de dados.
+1. Copie o arquivo `.env.example` para `.env` na raiz do projeto e ajuste os valores se necessário.
 2. Rode o comando `./mvnw spring-boot:run` na raiz do projeto.
 3. Acesse o endereço `http://localhost:8080` no seu navegador.
+
+## Variáveis de Ambiente
+
+As credenciais do banco de dados são configuradas via variáveis de ambiente. Copie `.env.example` para `.env` e preencha os valores:
+
+| Variável      | Descrição                  | Padrão |
+|---------------|----------------------------|--------|
+| `DB_USERNAME` | Usuário do banco de dados  | `sa`   |
+| `DB_PASSWORD` | Senha do banco de dados    | `sa`   |
+
+> O arquivo `.env` está no `.gitignore` e **não deve ser commitado**.
 
 ## Tecnologias Utilizadas
 
@@ -197,7 +208,7 @@ Resposta:
 }
 ```
 
-#### `POST /doctor/cad`
+#### `POST /doctor/batch`
 Cria novos médicos com apenas uma requisição.
 
 Requisição:
@@ -385,7 +396,7 @@ Resposta:
 }
 ```
 
-#### `POST /patient/cad`
+#### `POST /patient/batch`
 Criar multiplos pacientes a partir de uma requisição.
 
 Requisição:
