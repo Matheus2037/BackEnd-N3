@@ -78,6 +78,12 @@ public class AppointmentServiceImpl implements AppointmentService {
   public AppointmentDto partialUpdateAppointment(Long id,
       UpdateAppointmentDto updateAppointmentDto) {
     Appointment appointment = findAppointmentOrThrow(id);
+    if (updateAppointmentDto.patientId() != null) {
+      appointment.setPatient(findPatientOrThrow(updateAppointmentDto.patientId()));
+    }
+    if (updateAppointmentDto.doctorId() != null) {
+      appointment.setDoctor(findDoctorOrThrow(updateAppointmentDto.doctorId()));
+    }
     if (updateAppointmentDto.appointmentDate() != null) {
       appointment.setAppointmentDate(updateAppointmentDto.appointmentDate());
     }

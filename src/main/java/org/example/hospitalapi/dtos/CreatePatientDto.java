@@ -1,18 +1,21 @@
 package org.example.hospitalapi.dtos;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.example.hospitalapi.enums.GenderEnum;
 
 public record CreatePatientDto(
 
+    @NotBlank
     @Size(
         min = 3,
         max = 256,
         message = "O campo firstName deve ter entre 3 a 256 caracteres"
     )
     String firstName,
+    @NotBlank
     @Size(
         min = 3,
         max = 256,

@@ -22,6 +22,9 @@ public record CreateAppointmentDto(
     )
     long doctorId,
 
+    @NotNull(
+        message = "Appointment date is required"
+    )
     @Future(
         message = "A data da consulta deve ser maior que a atual"
     )

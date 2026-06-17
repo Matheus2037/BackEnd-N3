@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import org.example.hospitalapi.enums.StatusEnum;
 
 public record UpdateAppointmentDto(
-    long patientId,
-    long doctorId,
+    Long patientId,
+    Long doctorId,
     LocalDate appointmentDate,
     StatusEnum status
 ) {
