@@ -17,6 +17,10 @@ public interface PatientService {
 
   PatientDto getPatientById(Long id);
 
+  Page<PatientDto> getPatientsByFirstName(String firstName, Pageable pageable);
+
+  PatientDto getPatientByEmail(String email);
+
   PatientDto partialUpdatePatient(Long id, UpdatePatientDto updatePatientDto);
 
   void deletePatient(Long id);

@@ -56,6 +56,18 @@ public class PatientServiceImpl implements PatientService {
   }
 
   @Override
+  public Page<PatientDto> getPatientsByFirstName(String firstName, Pageable pageable) {
+    return patientRepository.findByFirstName(firstName, pageable).map(patientMapper::toDto);
+  }
+
+  @Override
+  public PatientDto getPatientByEmail(String email) {
+    Patient patient = patientRepository.findByEmail(email)
+        .orElseThrow(() -> new NotFoundException("Patient not found with email: " + email));
+    return patientMapper.toDto(patient);
+  }
+
+  @Override
   public PatientDto partialUpdatePatient(Long id, UpdatePatientDto dto) {
     Patient patient = findPatientOrThrow(id);
 
