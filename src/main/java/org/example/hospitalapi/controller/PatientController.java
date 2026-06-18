@@ -2,7 +2,6 @@ package org.example.hospitalapi.controller;
 
 import jakarta.validation.Valid;
 import java.util.List;
-import org.springframework.http.ResponseEntity;
 import org.example.hospitalapi.dtos.CreatePatientDto;
 import org.example.hospitalapi.dtos.PatientDto;
 import org.example.hospitalapi.dtos.UpdatePatientDto;
@@ -11,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -55,7 +55,8 @@ public class PatientController {
   @PostMapping("/batch")
   public ResponseEntity<List<PatientDto>> createPatientList(
       @RequestBody @Valid List<CreatePatientDto> createPatientList) {
-    return ResponseEntity.status(HttpStatus.CREATED).body(patientService.createPatientList(createPatientList));
+    return ResponseEntity.status(HttpStatus.CREATED)
+        .body(patientService.createPatientList(createPatientList));
   }
 
   @PatchMapping("/{id}")

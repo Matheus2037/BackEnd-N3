@@ -30,7 +30,8 @@ public record CreateAppointmentDto(
     )
     LocalDate appointmentDate,
     @NotNull(
-        message = "O campo status deve ser uma das seguintes opções: (Scheduled, Completed, Canceled, Rescheduled, Pending Confirmation)"
+        message = "O campo status deve ser uma das seguintes opções: (Scheduled, Completed, "
+            + "Canceled, Rescheduled, Pending Confirmation)"
     )
     StatusEnum status
 
