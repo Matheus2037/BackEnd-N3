@@ -1,5 +1,6 @@
 package org.example.hospitalapi.dtos;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -33,6 +34,7 @@ public record CreateAppointmentDto(
         message = "O campo status deve ser uma das seguintes opções: (Scheduled, Completed, "
             + "Canceled, Rescheduled, Pending Confirmation)"
     )
+    @Schema(example = "SCHEDULED")
     StatusEnum status
 
 ) {

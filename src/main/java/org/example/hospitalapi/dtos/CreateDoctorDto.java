@@ -1,5 +1,6 @@
 package org.example.hospitalapi.dtos;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -40,6 +41,7 @@ public record CreateDoctorDto(
     @NotNull(
         message = "O campo gender deve ser uma das seguintes opções: (Male,Female,Other)"
     )
+    @Schema(example = "MALE")
     GenderEnum gender
 ) {
 
